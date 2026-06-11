@@ -1,0 +1,247 @@
+[
+  {
+    "id": "ash-reshteh",
+    "name": "Ash Reshteh",
+    "category": "Hovedret",
+    "link": "https://livsstil.tv2.dk/mad/opskrift/ash-reshteh-nudelsuppe",
+    "image": "/images/ash-reshteh.jpg"
+  },
+  {
+    "id": "bagels",
+    "name": "Bagels",
+    "category": "Hovedret",
+    "link": "https://www.nemlig.com/opskrifter/clubsandwich-med-chili-cheddar-bagel-miss-bagel-98002964",
+    "image": "/images/bagels.jpg"
+  },
+  {
+    "id": "bagte-quesadillas-med-oksekoed",
+    "name": "Bagte Quesadillas Med Oksekød",
+    "category": "Hovedret",
+    "link": "https://mummum.dk/bagte-quesadillas-med-oksekoed/",
+    "image": "/images/bagte-quesadillas-med-oksekoed.jpg"
+  },
+  {
+    "id": "boller-i-karry",
+    "name": "Boller i karry",
+    "category": "Hovedret",
+    "link": "https://madsvin.com/boller-i-karry-opskrift/",
+    "image": "/images/boller-i-karry.jpg"
+  },
+  {
+    "id": "braendende-kaerlighed",
+    "name": "Brændende Kærlighed",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/braendende-kaerlighed/",
+    "image": "/images/braendende-kaerlighed.jpg"
+  },
+  {
+    "id": "chili-con-carne",
+    "name": "Chili con carne",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/chili-con-carne/",
+    "image": "/images/chili-con-carne.jpg"
+  },
+  {
+    "id": "chili-sin-carne",
+    "name": "Chili sin carne",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/chili-sin-carne/",
+    "image": "/images/chili-sin-carne.jpg"
+  },
+  {
+    "id": "caesarsalat",
+    "name": "Cæsarsalat",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/caesarsalat/",
+    "image": "/images/caesarsalat.jpg"
+  },
+  {
+    "id": "feta-pasta",
+    "name": "Feta Pasta",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/feta-pasta-med-tomat/",
+    "image": "/images/feta-pasta.jpg"
+  },
+  {
+    "id": "frikadeller-med-stuvet-hvidkaal",
+    "name": "Frikadeller med stuvet hvidkål",
+    "category": "Hovedret",
+    "link": "https://madogkaerlighed.dk/frikadeller-med-stuvet-hvidkaal/",
+    "image": "/images/frikadeller-med-stuvet-hvidkaal.jpg"
+  },
+  {
+    "id": "grillspyd",
+    "name": "Grillspyd",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/grillspyd-med-kylling/",
+    "image": "/images/grillspyd.jpg"
+  },
+  {
+    "id": "groentsagslasagne",
+    "name": "Grøntsagslasagne",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/vegetar-lasagne/",
+    "image": "/images/groentsagslasagne.jpg"
+  },
+  {
+    "id": "gyros",
+    "name": "Gyros",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/gyros/",
+    "image": "/images/gyros.jpg"
+  },
+  {
+    "id": "jordskokke-suppe",
+    "name": "Jordskokke suppe",
+    "category": "Hovedret",
+    "link": "https://www.arla.dk/opskrifter/jordskokkesuppe/",
+    "image": "/images/jordskokke-suppe.jpg"
+  },
+  {
+    "id": "karbonader",
+    "name": "Karbonader",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/karbonader/",
+    "image": "/images/karbonader.jpg"
+  },
+  {
+    "id": "kikaertegryde-med-linser-og-kokosmaelk",
+    "name": "Kikærtegryde med linser og kokosmælk",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/kikaertegryde/",
+    "image": "/images/kikaertegryde-med-linser-og-kokosmaelk.jpg"
+  },
+  {
+    "id": "koteletter-i-fad",
+    "name": "Koteletter i fad",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/koteletter-i-fad/",
+    "image": "/images/koteletter-i-fad.jpg"
+  },
+  {
+    "id": "kylling-i-fad-med-pikant-og-groentsager",
+    "name": "Kylling i fad med pikant og grøntsager",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/kylling-fad/",
+    "image": "/images/kylling-i-fad-med-pikant-og-groentsager.jpg"
+  },
+  {
+    "id": "lasagne",
+    "name": "Lasagne",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/lasagne/",
+    "image": "/images/lasagne.jpg"
+  },
+  {
+    "id": "orientalsk-risret-med-oksekoed",
+    "name": "Orientalsk risret med oksekød",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/orientalsk-risret/",
+    "image": "/images/orientalsk-risret-med-oksekoed.jpg"
+  },
+  {
+    "id": "panang-karry-med-kylling",
+    "name": "Panang karry med kylling",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/panang-karry-med-kylling/",
+    "image": "/images/panang-karry-med-kylling.jpg"
+  },
+  {
+    "id": "paprikagryde",
+    "name": "Paprikagryde",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/paprikagryde/",
+    "image": "/images/paprikagryde.jpg"
+  },
+  {
+    "id": "pariserboef",
+    "name": "Pariserbøf",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/pariserbof/",
+    "image": "/images/pariserboef.jpg"
+  },
+  {
+    "id": "pasta-i-peberfrugt-sauce",
+    "name": "Pasta i Peberfrugt Sauce",
+    "category": "Hovedret",
+    "link": "https://mummum.dk/pastaret-i-peberfrugtsauce-med-moerbrad/",
+    "image": "/images/pasta-i-peberfrugt-sauce.jpg"
+  },
+  {
+    "id": "pita",
+    "name": "Pita",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/pita-med-kylling/",
+    "image": "/images/pita.jpg"
+  },
+  {
+    "id": "ravioli-pasta",
+    "name": "Ravioli Pasta",
+    "category": "Hovedret",
+    "link": "https://louiogbearnaisen.dk/2019/03/tortellini.html",
+    "image": "/images/ravioli-pasta.jpg"
+  },
+  {
+    "id": "sesame-chicken",
+    "name": "Sesame Chicken",
+    "category": "Hovedret",
+    "link": "https://curatedkitchenware.com/blogs/soupeduprecipes/sesame-chicken-1",
+    "image": "/images/sesame-chicken.jpg"
+  },
+  {
+    "id": "skinkestang",
+    "name": "Skinkestang",
+    "category": "Hovedret",
+    "link": "https://www.arla.dk/opskrifter/skinkestang/",
+    "image": "/images/skinkestang.jpg"
+  },
+  {
+    "id": "spaghetti-carbonara",
+    "name": "Spaghetti Carbonara",
+    "category": "Hovedret",
+    "link": "https://meyers.dk/opskrifter/spaghetti-carbonara/p/72006/",
+    "image": "/images/spaghetti-carbonara.jpg"
+  },
+  {
+    "id": "stegte-nudler",
+    "name": "Stegte Nudler",
+    "category": "Hovedret",
+    "link": "https://www.dinneratthezoo.com/pan-fried-noodles/",
+    "image": "/images/stegte-nudler.jpg"
+  },
+  {
+    "id": "svensk-poelseret",
+    "name": "Svensk Pølseret",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/svensk-poelseret/",
+    "image": "/images/svensk-poelseret.jpg"
+  },
+  {
+    "id": "svinekaeber",
+    "name": "Svinekæber",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/svinekaeber-braiserede-med-oel/",
+    "image": "/images/svinekaeber.jpg"
+  },
+  {
+    "id": "tantanmen-ramen",
+    "name": "Tantanmen Ramen",
+    "category": "Hovedret",
+    "link": "https://aaronandclaire.com/authentic-easy-tantanmen-at-home/",
+    "image": "/images/tantanmen-ramen.jpg"
+  },
+  {
+    "id": "tarteletter",
+    "name": "Tarteletter",
+    "category": "Forret",
+    "link": "https://www.valdemarsro.dk/tarteletter-hoens-asparges/",
+    "image": "/images/tarteletter.jpg"
+  },
+  {
+    "id": "vegetar-enchiladas",
+    "name": "Vegetar enchiladas",
+    "category": "Hovedret",
+    "link": "https://www.valdemarsro.dk/vegetar-enchiladas/",
+    "image": "/images/vegetar-enchiladas.jpg"
+  }
+]

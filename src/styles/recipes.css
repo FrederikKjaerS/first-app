@@ -1,0 +1,454 @@
+/* ---------------------------------------------------------------------------
+   Gallery, recipe cards & week planner
+--------------------------------------------------------------------------- */
+
+/* ----------------------------- filter bar ------------------------------- */
+
+.filterbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin: 26px 0 30px;
+}
+
+.search {
+  flex: 1 1 240px;
+  max-width: 340px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  padding: 11px 18px;
+  outline: none;
+  transition: box-shadow 0.18s, transform 0.18s;
+}
+
+.search:focus {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-pop);
+}
+
+.search::placeholder {
+  color: var(--ink-soft);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  border: 2px solid var(--ink);
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, transform 0.18s;
+}
+
+.chip:hover {
+  transform: translateY(-2px);
+}
+
+.chip.is-active {
+  background: var(--ink);
+  color: var(--card);
+}
+
+.empty {
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 16px;
+  padding: 56px 0;
+}
+
+/* ----------------------------- grid & cards ----------------------------- */
+
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 26px;
+}
+
+.card {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-pop);
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s;
+  animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.card:hover {
+  transform: translate(-3px, -3px) rotate(-0.4deg);
+  box-shadow: var(--shadow-pop-hover);
+}
+
+.card-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-bottom: 2px solid var(--ink);
+  background: var(--paper-deep);
+}
+
+.card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card:hover .card-media img {
+  transform: scale(1.06);
+}
+
+.card-media-fallback {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-display);
+  font-size: 64px;
+  font-style: italic;
+  color: var(--accent);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(194, 64, 31, 0.12), transparent 60%),
+    var(--paper-deep);
+}
+
+.card-category {
+  position: absolute;
+  top: 12px;
+  left: -6px;
+  background: var(--accent);
+  color: #fff7ec;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 12px 5px 14px;
+  transform: rotate(-2deg);
+  box-shadow: 3px 3px 0 rgba(39, 25, 14, 0.25);
+}
+
+.card-body {
+  padding: 14px 16px 16px;
+}
+
+.card-titlerow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 620;
+  font-variation-settings: "SOFT" 50, "opsz" 30;
+  line-height: 1.2;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.card-title:hover {
+  color: var(--accent-deep);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.heart {
+  flex-shrink: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-size: 21px;
+  line-height: 1;
+  color: var(--ink-soft);
+  padding: 2px 4px;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s;
+}
+
+.heart:hover {
+  transform: scale(1.25);
+  color: var(--accent);
+}
+
+.heart.is-fav {
+  color: var(--accent);
+  animation: heartPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes heartPop {
+  40% { transform: scale(1.5); }
+  100% { transform: scale(1); }
+}
+
+/* day-dots: put a dish straight onto the week plan from its card */
+
+.card-days {
+  display: flex;
+  gap: 5px;
+  margin-top: 12px;
+}
+
+.daydot {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  background: none;
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all 0.16s ease;
+  padding: 0;
+}
+
+.daydot:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+  transform: translateY(-2px);
+}
+
+.daydot.is-on {
+  background: var(--herb);
+  border-color: var(--herb);
+  color: #f3f7f1;
+}
+
+.daydot-big {
+  width: 36px;
+  height: 36px;
+  font-size: 14px;
+}
+
+.card-remove {
+  margin-top: 10px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  padding: 0;
+}
+
+.card-remove:hover {
+  color: var(--accent-deep);
+}
+
+/* ----------------------------- week planner ----------------------------- */
+
+.planner {
+  padding-top: 40px;
+}
+
+.planner-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.planner-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 52px);
+  font-weight: 620;
+  font-variation-settings: "SOFT" 60, "opsz" 60;
+}
+
+.planner-sub {
+  margin: 6px 0 0;
+  color: var(--ink-soft);
+}
+
+.planner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.week {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(138px, 1fr));
+  gap: 14px;
+}
+
+.day {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  padding: 12px;
+  min-height: 210px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-pop);
+  animation: fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.day:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-pop-hover);
+}
+
+.day.is-today {
+  border-color: var(--accent);
+  border-width: 3px;
+}
+
+.day-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  border-bottom: 2px dashed var(--line);
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.day-name {
+  font-family: var(--font-display);
+  font-weight: 640;
+  font-size: 16px;
+}
+
+.day-today {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: #fff7ec;
+  border-radius: 999px;
+  padding: 3px 8px;
+}
+
+.day-recipe {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.day-media {
+  display: block;
+  aspect-ratio: 16 / 10;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1.5px solid var(--ink);
+}
+
+.day-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.day-media:hover img {
+  transform: scale(1.07);
+}
+
+.day-recipe-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14.5px;
+  line-height: 1.25;
+  color: var(--ink);
+  text-decoration: none;
+  flex: 1;
+}
+
+.day-recipe-name:hover {
+  color: var(--accent-deep);
+  text-decoration: underline;
+}
+
+.day-tools {
+  display: flex;
+  gap: 6px;
+}
+
+.day-tool {
+  flex: 1;
+  border: 1.5px solid var(--line);
+  background: none;
+  border-radius: 8px;
+  font-size: 13px;
+  padding: 5px 0;
+  cursor: pointer;
+  color: var(--ink-soft);
+  transition: all 0.16s;
+}
+
+.day-tool:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.day-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+}
+
+.day-pick {
+  border: 2px dashed var(--line);
+  background: none;
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  padding: 14px 8px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.day-pick:hover {
+  border-color: var(--accent);
+  color: var(--accent-deep);
+  background: rgba(194, 64, 31, 0.05);
+}
+
+.day-pick-dice {
+  padding: 8px;
+  font-size: 16px;
+}
+
+@media (max-width: 900px) {
+  .week {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}

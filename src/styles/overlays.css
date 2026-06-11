@@ -1,0 +1,358 @@
+/* ---------------------------------------------------------------------------
+   Overlays: dinner picker, recipe chooser & add-recipe dialog
+--------------------------------------------------------------------------- */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.overlay-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(31, 19, 9, 0.78);
+  backdrop-filter: blur(3px);
+  animation: backdropIn 0.25s ease both;
+}
+
+@keyframes backdropIn {
+  from { opacity: 0; }
+}
+
+.overlay-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: var(--card);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform 0.18s, background 0.18s;
+  z-index: 2;
+}
+
+.overlay-close:hover {
+  transform: rotate(90deg);
+  background: var(--paper);
+}
+
+/* ----------------------------- picker ----------------------------------- */
+
+.picker {
+  position: relative;
+  width: min(480px, 100%);
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: 20px;
+  box-shadow: 14px 14px 0 rgba(0, 0, 0, 0.3);
+  padding: 28px 28px 24px;
+  text-align: center;
+  animation: overlayPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes overlayPop {
+  from {
+    opacity: 0;
+    transform: scale(0.88) translateY(20px);
+  }
+}
+
+.picker-kicker {
+  margin: 0 0 16px;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.picker-card {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-pop);
+}
+
+.picker-card.is-settled {
+  animation: settle 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes settle {
+  0% { transform: scale(0.96) rotate(-1.5deg); }
+  60% { transform: scale(1.04) rotate(0.8deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+.picker-media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-bottom: 2px solid var(--ink);
+  background: var(--paper-deep);
+}
+
+.picker-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.picker-card.is-spinning .picker-media img {
+  animation: flickIn 0.12s ease;
+  filter: saturate(1.1);
+}
+
+@keyframes flickIn {
+  from {
+    opacity: 0.4;
+    transform: scale(1.05);
+  }
+}
+
+.picker-name {
+  margin: 0;
+  padding: 14px 16px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 640;
+  font-variation-settings: "SOFT" 70, "opsz" 40;
+  line-height: 1.15;
+}
+
+.picker-wait {
+  margin: 18px 0 4px;
+  font-style: italic;
+  color: var(--ink-soft);
+  font-family: var(--font-display);
+}
+
+.picker-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
+  animation: fadeUp 0.4s ease both;
+}
+
+.picker-plan {
+  margin-top: 8px;
+  padding-top: 14px;
+  border-top: 2px dashed var(--line);
+}
+
+.picker-plan-label {
+  display: block;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+
+.picker-plan-days {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.picker-plan-confirm {
+  margin: 12px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--herb);
+}
+
+.picker-favtoggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.picker-favtoggle input {
+  accent-color: var(--accent);
+}
+
+/* ----------------------------- chooser ---------------------------------- */
+
+.chooser {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: min(680px, 88vh);
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: 20px;
+  box-shadow: 14px 14px 0 rgba(0, 0, 0, 0.3);
+  padding: 26px;
+  animation: overlayPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.chooser-title {
+  margin: 0 24px 14px 0;
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 620;
+  font-variation-settings: "SOFT" 60, "opsz" 50;
+}
+
+.chooser-title em {
+  color: var(--accent);
+  font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 50;
+}
+
+.chooser-search {
+  max-width: none;
+  margin-bottom: 14px;
+}
+
+.chooser-list {
+  list-style: none;
+  margin: 0;
+  padding: 2px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chooser-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  padding: 8px 12px 8px 8px;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 16.5px;
+  font-weight: 600;
+  color: var(--ink);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.chooser-item:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 rgba(39, 25, 14, 0.18);
+}
+
+.chooser-item img {
+  width: 56px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1.5px solid var(--ink);
+  flex-shrink: 0;
+}
+
+.chooser-item span:first-of-type {
+  flex: 1;
+}
+
+.chooser-item-cat {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ----------------------------- add dialog ------------------------------- */
+
+.dialog {
+  position: relative;
+  width: min(460px, 100%);
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: 20px;
+  box-shadow: 14px 14px 0 rgba(0, 0, 0, 0.3);
+  padding: 28px;
+  animation: overlayPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  max-height: 88vh;
+  overflow-y: auto;
+}
+
+.dialog-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 640;
+  font-variation-settings: "SOFT" 60, "opsz" 50;
+}
+
+.dialog-sub {
+  margin: 6px 0 18px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.field {
+  display: block;
+  margin-bottom: 14px;
+}
+
+.field span {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  padding: 10px 14px;
+  outline: none;
+  transition: box-shadow 0.16s, transform 0.16s;
+}
+
+.field input:focus,
+.field select:focus {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 rgba(39, 25, 14, 0.18);
+}
+
+.dialog-error {
+  margin: 0 0 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent-deep);
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+@media (max-width: 520px) {
+  .picker,
+  .chooser,
+  .dialog {
+    padding: 20px;
+  }
+}
