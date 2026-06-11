@@ -5,3 +5,6 @@ dist
 tsconfig.tsbuildinfo
 .env
 .playwright-mcp
+
+# Local Netlify folder
+.netlify
