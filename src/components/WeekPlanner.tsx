@@ -5,6 +5,8 @@ import { todayKey } from "../lib/week";
 import { pickRandomExcluding } from "../lib/random";
 import { recipeImageSrc } from "../lib/image";
 import { useStoredState } from "../hooks/useStoredState";
+import { WeekHistory } from "./WeekHistory";
+import { weekLabel } from "../lib/history";
 
 type Props = {
   readonly recipes: readonly Recipe[];
@@ -12,6 +14,7 @@ type Props = {
   readonly weekPlan: WeekPlanApi;
   readonly onChooseDay: (day: DayKey) => void;
   readonly onSpin: () => void;
+  readonly onSwipe: () => void;
 };
 
 const isBoolean = (value: unknown): value is boolean =>
@@ -23,8 +26,9 @@ export function WeekPlanner({
   weekPlan,
   onChooseDay,
   onSpin,
+  onSwipe,
 }: Props) {
-  const { plan, assign, clear, reset, fill } = weekPlan;
+  const { plan, assign, clear, reset, fill, history } = weekPlan;
   const [onlyTried, setOnlyTried] = useStoredState(
     "planner-only-tried",
     true,
@@ -55,16 +59,20 @@ export function WeekPlanner({
         <div>
           <h1 className="planner-title">Ugens plan</h1>
           <p className="planner-sub">
+            {weekLabel(weekPlan.weekKey)} ·{" "}
             {plannedCount === 7
-              ? "Hele ugen er på plads — flot klaret!"
+              ? "hele ugen er på plads — flot klaret!"
               : `${plannedCount} af 7 aftener planlagt`}
           </p>
         </div>
         <div className="planner-actions">
-          <button type="button" className="btn btn-primary" onClick={() => fill(poolIds)}>
+          <button type="button" className="btn btn-primary" onClick={onSwipe}>
+            🔥 Swipe ugen
+          </button>
+          <button type="button" className="btn btn-outline" onClick={() => fill(poolIds)}>
             🎲 Udfyld ugen
           </button>
-          <button type="button" className="btn btn-outline" onClick={onSpin}>
+          <button type="button" className="btn btn-ghost" onClick={onSpin}>
             Træk én ret
           </button>
           {plannedCount > 0 && (
@@ -162,6 +170,13 @@ export function WeekPlanner({
           );
         })}
       </ol>
+
+      <WeekHistory
+        history={history}
+        recipesById={recipeById}
+        onReuse={weekPlan.reuseWeek}
+        onDelete={weekPlan.deleteHistoryEntry}
+      />
     </section>
   );
 }

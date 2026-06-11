@@ -4,6 +4,7 @@ import { Hero } from "./components/Hero";
 import { RecipeGallery } from "./components/RecipeGallery";
 import { WeekPlanner } from "./components/WeekPlanner";
 import { PickerOverlay } from "./components/PickerOverlay";
+import { SwipePlanner } from "./components/SwipePlanner";
 import { RecipeChooser } from "./components/RecipeChooser";
 import { AddRecipeDialog } from "./components/AddRecipeDialog";
 import { useRecipes } from "./hooks/useRecipes";
@@ -22,6 +23,7 @@ export default function App() {
 
   const [view, setView] = useState<View>("retter");
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [swipeOpen, setSwipeOpen] = useState(false);
   const [addOpen, setAddOpen] = useState(false);
   const [chooserDay, setChooserDay] = useState<DayKey | null>(null);
 
@@ -39,6 +41,7 @@ export default function App() {
             triedCount={recipesApi.tried.size}
             newCount={recipes.length - recipesApi.tried.size}
             onSpin={() => setPickerOpen(true)}
+            onSwipe={() => setSwipeOpen(true)}
             onPlanWeek={() => setView("uge")}
           />
           <RecipeGallery
@@ -55,6 +58,7 @@ export default function App() {
           weekPlan={weekPlan}
           onChooseDay={setChooserDay}
           onSpin={() => setPickerOpen(true)}
+          onSwipe={() => setSwipeOpen(true)}
         />
       )}
 
@@ -71,6 +75,20 @@ export default function App() {
           onAssignDay={weekPlan.assign}
           onClearDay={weekPlan.clear}
           onClose={() => setPickerOpen(false)}
+        />
+      )}
+
+      {swipeOpen && (
+        <SwipePlanner
+          recipes={recipes}
+          tried={recipesApi.tried}
+          favorites={recipesApi.favorites}
+          weekPlan={weekPlan}
+          onShowWeek={() => {
+            setSwipeOpen(false);
+            setView("uge");
+          }}
+          onClose={() => setSwipeOpen(false)}
         />
       )}
 

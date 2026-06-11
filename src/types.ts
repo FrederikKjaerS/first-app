@@ -34,3 +34,9 @@ export const DAY_LABELS: Readonly<Record<DayKey, string>> = {
 };
 
 export type WeekPlan = Readonly<Partial<Record<DayKey, string>>>;
+
+/** A finished week, archived when a new week begins. */
+export type WeekHistoryEntry = {
+  readonly week: string; // ISO week key, e.g. "2026-W24"
+  readonly plan: WeekPlan;
+};

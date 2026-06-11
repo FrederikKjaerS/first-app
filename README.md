@@ -9,6 +9,12 @@ Frederiks personlige opskriftshub — alle yndlingsretterne samlet ét sted.
   (kan begrænses til favoritter).
 - **Ugeplan** — planlæg mandag til søndag, udfyld hele ugen med ét klik,
   byt enkelte dage med terningen. Gemmes i browseren.
+- **Swipe ugen** — Tinder for aftensmad: swipe til højre for at sætte
+  retten på næste ledige dag, til venstre for at springe over, med
+  fortryd-knap og fremgangsvisning til ugen er fuld.
+- **Historik** — når en ny uge begynder, arkiveres den gamle ugeplan
+  automatisk under "Tidligere uger", hvor den kan genbruges eller slettes.
+  Swiperen advarer, hvis I fik en ret for nylig.
 - **Egne opskrifter** — tilføj nye retter med link og billede; de gemmes
   lokalt i browseren (localStorage).
 - Klik på en rets billede eller navn for at åbne den originale opskrift.

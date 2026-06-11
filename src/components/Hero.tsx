@@ -2,10 +2,11 @@ type Props = {
   readonly triedCount: number;
   readonly newCount: number;
   readonly onSpin: () => void;
+  readonly onSwipe: () => void;
   readonly onPlanWeek: () => void;
 };
 
-export function Hero({ triedCount, newCount, onSpin, onPlanWeek }: Props) {
+export function Hero({ triedCount, newCount, onSpin, onSwipe, onPlanWeek }: Props) {
   return (
     <section className="hero">
       <p className="hero-kicker reveal">
@@ -23,7 +24,10 @@ export function Hero({ triedCount, newCount, onSpin, onPlanWeek }: Props) {
         eller læg ugens plan på under et minut.
       </p>
       <div className="hero-actions reveal d4">
-        <button type="button" className="btn btn-primary btn-big" onClick={onSpin}>
+        <button type="button" className="btn btn-primary btn-big" onClick={onSwipe}>
+          <span aria-hidden="true">🔥</span> Swipe ugen
+        </button>
+        <button type="button" className="btn btn-outline btn-big" onClick={onSpin}>
           <span className="dice" aria-hidden="true">🎲</span> Træk en ret
         </button>
         <button type="button" className="btn btn-outline btn-big" onClick={onPlanWeek}>
