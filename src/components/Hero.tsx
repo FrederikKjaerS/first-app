@@ -1,13 +1,17 @@
 type Props = {
-  readonly recipeCount: number;
+  readonly triedCount: number;
+  readonly newCount: number;
   readonly onSpin: () => void;
   readonly onPlanWeek: () => void;
 };
 
-export function Hero({ recipeCount, onSpin, onPlanWeek }: Props) {
+export function Hero({ triedCount, newCount, onSpin, onPlanWeek }: Props) {
   return (
     <section className="hero">
-      <p className="hero-kicker reveal">Frederiks private kogebog · {recipeCount} retter</p>
+      <p className="hero-kicker reveal">
+        Frederiks private kogebog · {triedCount} afprøvede retter · {newCount} nye
+        idéer
+      </p>
       <h1 className="hero-title">
         <span className="reveal d1">Hvad skal vi</span>
         <span className="hero-title-accent reveal d2">

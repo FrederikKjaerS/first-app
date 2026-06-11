@@ -31,6 +31,7 @@ export function AddRecipeDialog({ existingIds, onAdd, onClose }: Props) {
   const [category, setCategory] = useState<Category>("Hovedret");
   const [link, setLink] = useState("");
   const [image, setImage] = useState("");
+  const [hasTried, setHasTried] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -66,6 +67,7 @@ export function AddRecipeDialog({ existingIds, onAdd, onClose }: Props) {
       category,
       link: link.trim(),
       image: image.trim(),
+      tried: hasTried,
       custom: true,
     });
   };
@@ -125,6 +127,15 @@ export function AddRecipeDialog({ existingIds, onAdd, onClose }: Props) {
             onChange={(event) => setImage(event.target.value)}
             placeholder="https://…/billede.jpg"
           />
+        </label>
+
+        <label className="field field-check">
+          <input
+            type="checkbox"
+            checked={hasTried}
+            onChange={(event) => setHasTried(event.target.checked)}
+          />
+          <span>Jeg har allerede prøvet og godkendt retten</span>
         </label>
 
         {error && (

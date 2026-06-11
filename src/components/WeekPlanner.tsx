@@ -4,29 +4,48 @@ import type { WeekPlanApi } from "../hooks/useWeekPlan";
 import { todayKey } from "../lib/week";
 import { pickRandomExcluding } from "../lib/random";
 import { recipeImageSrc } from "../lib/image";
+import { useStoredState } from "../hooks/useStoredState";
 
 type Props = {
   readonly recipes: readonly Recipe[];
+  readonly tried: ReadonlySet<string>;
   readonly weekPlan: WeekPlanApi;
   readonly onChooseDay: (day: DayKey) => void;
   readonly onSpin: () => void;
 };
 
-export function WeekPlanner({ recipes, weekPlan, onChooseDay, onSpin }: Props) {
+const isBoolean = (value: unknown): value is boolean =>
+  typeof value === "boolean";
+
+export function WeekPlanner({
+  recipes,
+  tried,
+  weekPlan,
+  onChooseDay,
+  onSpin,
+}: Props) {
   const { plan, assign, clear, reset, fill } = weekPlan;
+  const [onlyTried, setOnlyTried] = useStoredState(
+    "planner-only-tried",
+    true,
+    isBoolean,
+  );
   const today = todayKey();
   const recipeById = useMemo(
     () => new Map(recipes.map((r) => [r.id, r])),
     [recipes],
   );
-  const allIds = useMemo(() => recipes.map((r) => r.id), [recipes]);
+  const poolIds = useMemo(() => {
+    const pool = onlyTried ? recipes.filter((r) => tried.has(r.id)) : recipes;
+    return (pool.length > 0 ? pool : recipes).map((r) => r.id);
+  }, [recipes, tried, onlyTried]);
   const plannedCount = DAY_KEYS.filter((day) => plan[day]).length;
 
   const shuffleDay = (day: DayKey) => {
     const used = new Set(
       Object.values(plan).filter((id): id is string => Boolean(id)),
     );
-    const next = pickRandomExcluding(allIds, used);
+    const next = pickRandomExcluding(poolIds, used);
     if (next) assign(day, next);
   };
 
@@ -42,7 +61,7 @@ export function WeekPlanner({ recipes, weekPlan, onChooseDay, onSpin }: Props) {
           </p>
         </div>
         <div className="planner-actions">
-          <button type="button" className="btn btn-primary" onClick={() => fill(allIds)}>
+          <button type="button" className="btn btn-primary" onClick={() => fill(poolIds)}>
             🎲 Udfyld ugen
           </button>
           <button type="button" className="btn btn-outline" onClick={onSpin}>
@@ -53,6 +72,14 @@ export function WeekPlanner({ recipes, weekPlan, onChooseDay, onSpin }: Props) {
               Ryd ugen
             </button>
           )}
+          <label className="planner-toggle">
+            <input
+              type="checkbox"
+              checked={onlyTried}
+              onChange={(event) => setOnlyTried(event.target.checked)}
+            />
+            Kun afprøvede retter
+          </label>
         </div>
       </header>
 

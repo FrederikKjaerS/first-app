@@ -145,6 +145,59 @@
   box-shadow: 3px 3px 0 rgba(39, 25, 14, 0.25);
 }
 
+/* tried/new status — a little stamp on the photo's right corner */
+
+.card-status {
+  position: absolute;
+  top: 12px;
+  right: -4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  transform: rotate(2deg);
+  box-shadow: 3px 3px 0 rgba(39, 25, 14, 0.25);
+}
+
+.card-status.is-tried {
+  background: var(--herb);
+  color: #f3f7f1;
+}
+
+.card-status.is-new {
+  background: var(--gold);
+  color: #2c2008;
+}
+
+.card-tried {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  border: 1.5px dashed var(--line);
+  background: none;
+  border-radius: 9px;
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  padding: 7px 8px;
+  cursor: pointer;
+  transition: all 0.16s;
+}
+
+.card-tried:hover {
+  border-color: var(--herb);
+  color: var(--herb);
+  background: rgba(68, 101, 63, 0.06);
+}
+
+.card-tried.is-tried {
+  border-style: solid;
+  border-color: var(--herb);
+  color: var(--herb);
+}
+
 .card-body {
   padding: 14px 16px 16px;
 }
@@ -289,7 +342,22 @@
 .planner-actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
+}
+
+.planner-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.planner-toggle input {
+  accent-color: var(--herb);
 }
 
 .week {

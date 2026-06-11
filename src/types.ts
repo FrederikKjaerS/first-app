@@ -6,6 +6,8 @@ export type Recipe = {
   readonly category: Category;
   readonly link: string;
   readonly image: string;
+  /** True when the dish has been cooked and approved at least once. */
+  readonly tried?: boolean;
   readonly custom?: boolean;
 };
 

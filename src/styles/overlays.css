@@ -171,11 +171,18 @@
   color: var(--herb);
 }
 
+.picker-toggles {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-top: 16px;
+}
+
 .picker-favtoggle {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-top: 16px;
   font-size: 13.5px;
   color: var(--ink-soft);
   cursor: pointer;
@@ -334,6 +341,25 @@
 .field select:focus {
   transform: translate(-1px, -1px);
   box-shadow: 3px 3px 0 rgba(39, 25, 14, 0.18);
+}
+
+.field-check {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.field-check input {
+  width: auto;
+  accent-color: var(--herb);
+}
+
+.field-check span {
+  margin-bottom: 0;
+  font-weight: 600;
+  letter-spacing: 0;
 }
 
 .dialog-error {

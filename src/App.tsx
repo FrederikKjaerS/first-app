@@ -36,7 +36,8 @@ export default function App() {
       {view === "retter" ? (
         <>
           <Hero
-            recipeCount={recipes.length}
+            triedCount={recipesApi.tried.size}
+            newCount={recipes.length - recipesApi.tried.size}
             onSpin={() => setPickerOpen(true)}
             onPlanWeek={() => setView("uge")}
           />
@@ -50,6 +51,7 @@ export default function App() {
       ) : (
         <WeekPlanner
           recipes={recipes}
+          tried={recipesApi.tried}
           weekPlan={weekPlan}
           onChooseDay={setChooserDay}
           onSpin={() => setPickerOpen(true)}
@@ -65,6 +67,7 @@ export default function App() {
         <PickerOverlay
           recipes={recipes}
           favorites={recipesApi.favorites}
+          tried={recipesApi.tried}
           onAssignDay={weekPlan.assign}
           onClearDay={weekPlan.clear}
           onClose={() => setPickerOpen(false)}

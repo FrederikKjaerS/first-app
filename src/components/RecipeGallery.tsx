@@ -11,10 +11,11 @@ type Props = {
   readonly onClearDay: (day: DayKey) => void;
 };
 
-type CategoryFilter = Category | "alle" | "favoritter";
+type CategoryFilter = Category | "alle" | "favoritter" | "afproevede" | "nye";
 
 export function RecipeGallery({ recipesApi, plan, onAssignDay, onClearDay }: Props) {
-  const { recipes, favorites, toggleFavorite, removeRecipe } = recipesApi;
+  const { recipes, favorites, tried, toggleFavorite, toggleTried, removeRecipe } =
+    recipesApi;
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<CategoryFilter>("alle");
 
@@ -29,9 +30,11 @@ export function RecipeGallery({ recipesApi, plan, onAssignDay, onClearDay }: Pro
       if (q && !recipe.name.toLowerCase().includes(q)) return false;
       if (filter === "alle") return true;
       if (filter === "favoritter") return favorites.has(recipe.id);
+      if (filter === "afproevede") return tried.has(recipe.id);
+      if (filter === "nye") return !tried.has(recipe.id);
       return recipe.category === filter;
     });
-  }, [recipes, query, filter, favorites]);
+  }, [recipes, query, filter, favorites, tried]);
 
   return (
     <section className="gallery" id="opskrifter">
@@ -49,6 +52,16 @@ export function RecipeGallery({ recipesApi, plan, onAssignDay, onClearDay }: Pro
             label="Alle"
             active={filter === "alle"}
             onClick={() => setFilter("alle")}
+          />
+          <FilterChip
+            label={`✓ Afprøvede (${tried.size})`}
+            active={filter === "afproevede"}
+            onClick={() => setFilter("afproevede")}
+          />
+          <FilterChip
+            label={`Nye idéer (${recipes.length - tried.size})`}
+            active={filter === "nye"}
+            onClick={() => setFilter("nye")}
           />
           {activeCategories.map((category) => (
             <FilterChip
@@ -80,8 +93,10 @@ export function RecipeGallery({ recipesApi, plan, onAssignDay, onClearDay }: Pro
               recipe={recipe}
               index={index}
               isFavorite={favorites.has(recipe.id)}
+              isTried={tried.has(recipe.id)}
               plan={plan}
               onToggleFavorite={() => toggleFavorite(recipe.id)}
+              onToggleTried={() => toggleTried(recipe.id)}
               onAssignDay={(day) => onAssignDay(day, recipe.id)}
               onClearDay={onClearDay}
               onRemove={recipe.custom ? () => removeRecipe(recipe.id) : undefined}

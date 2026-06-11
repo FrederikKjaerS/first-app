@@ -4,8 +4,10 @@ type Props = {
   readonly recipe: Recipe;
   readonly index: number;
   readonly isFavorite: boolean;
+  readonly isTried: boolean;
   readonly plan: WeekPlan;
   readonly onToggleFavorite: () => void;
+  readonly onToggleTried: () => void;
   readonly onAssignDay: (day: DayKey) => void;
   readonly onClearDay: (day: DayKey) => void;
   readonly onRemove?: () => void;
@@ -15,8 +17,10 @@ export function RecipeCard({
   recipe,
   index,
   isFavorite,
+  isTried,
   plan,
   onToggleFavorite,
+  onToggleTried,
   onAssignDay,
   onClearDay,
   onRemove,
@@ -38,6 +42,12 @@ export function RecipeCard({
           </span>
         )}
         <span className="card-category">{recipe.category}</span>
+        <span
+          className={`card-status ${isTried ? "is-tried" : "is-new"}`}
+          aria-hidden="true"
+        >
+          {isTried ? "✓ Afprøvet" : "Ny idé"}
+        </span>
       </a>
 
       <div className="card-body">
@@ -86,6 +96,15 @@ export function RecipeCard({
             );
           })}
         </div>
+
+        <button
+          type="button"
+          className={`card-tried ${isTried ? "is-tried" : ""}`}
+          onClick={onToggleTried}
+          aria-pressed={isTried}
+        >
+          {isTried ? "✓ Afprøvet og godkendt" : "Har du prøvet den? Godkend ✓"}
+        </button>
 
         {onRemove && (
           <button type="button" className="card-remove" onClick={onRemove}>

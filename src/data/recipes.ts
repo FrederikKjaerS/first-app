@@ -21,7 +21,8 @@ export const isRecipe = (value: unknown): value is Recipe => {
     r.name.length > 0 &&
     isCategory(r.category) &&
     typeof r.link === "string" &&
-    typeof r.image === "string"
+    typeof r.image === "string" &&
+    (r.tried === undefined || typeof r.tried === "boolean")
   );
 };
 

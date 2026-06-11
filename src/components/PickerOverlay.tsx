@@ -6,6 +6,7 @@ import { recipeImageSrc } from "../lib/image";
 type Props = {
   readonly recipes: readonly Recipe[];
   readonly favorites: ReadonlySet<string>;
+  readonly tried: ReadonlySet<string>;
   readonly onAssignDay: (day: DayKey, recipeId: string) => void;
   readonly onClearDay: (day: DayKey) => void;
   readonly onClose: () => void;
@@ -20,11 +21,13 @@ const SPIN_END_MS = 420;
 export function PickerOverlay({
   recipes,
   favorites,
+  tried,
   onAssignDay,
   onClearDay,
   onClose,
 }: Props) {
   const [onlyFavorites, setOnlyFavorites] = useState(false);
+  const [onlyTried, setOnlyTried] = useState(false);
   const [phase, setPhase] = useState<Phase>("spinning");
   const [current, setCurrent] = useState<Recipe | null>(null);
   const [round, setRound] = useState(0);
@@ -32,11 +35,13 @@ export function PickerOverlay({
   const previousPick = useRef<Recipe | null>(null);
 
   const pool = useMemo(() => {
-    const filtered = onlyFavorites
-      ? recipes.filter((r) => favorites.has(r.id))
-      : recipes;
+    const filtered = recipes.filter(
+      (r) =>
+        (!onlyFavorites || favorites.has(r.id)) &&
+        (!onlyTried || tried.has(r.id)),
+    );
     return filtered.length > 0 ? filtered : recipes;
-  }, [recipes, favorites, onlyFavorites]);
+  }, [recipes, favorites, tried, onlyFavorites, onlyTried]);
 
   useEffect(() => {
     if (pool.length === 0) return;
@@ -164,16 +169,26 @@ export function PickerOverlay({
           <p className="picker-wait">trommehvirvel…</p>
         )}
 
-        {favorites.size > 0 && (
+        <div className="picker-toggles">
           <label className="picker-favtoggle">
             <input
               type="checkbox"
-              checked={onlyFavorites}
-              onChange={(event) => setOnlyFavorites(event.target.checked)}
+              checked={onlyTried}
+              onChange={(event) => setOnlyTried(event.target.checked)}
             />
-            Træk kun blandt favoritter
+            Kun afprøvede retter
           </label>
-        )}
+          {favorites.size > 0 && (
+            <label className="picker-favtoggle">
+              <input
+                type="checkbox"
+                checked={onlyFavorites}
+                onChange={(event) => setOnlyFavorites(event.target.checked)}
+              />
+              Kun favoritter
+            </label>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { BASE_RECIPES, isRecipeList } from "../data/recipes";
 import type { Recipe } from "../types";
+import { isTried, toggleTried } from "../lib/tried";
 import { useStoredState } from "./useStoredState";
 
 const isStringArray = (value: unknown): value is string[] =>
@@ -17,6 +18,11 @@ export function useRecipes() {
     [],
     isStringArray,
   );
+  const [triedOverrides, setTriedOverrides] = useStoredState<string[]>(
+    "tried-overrides",
+    [],
+    isStringArray,
+  );
 
   const recipes = useMemo<readonly Recipe[]>(
     () =>
@@ -27,6 +33,13 @@ export function useRecipes() {
   );
 
   const favorites = useMemo(() => new Set(favoriteIds), [favoriteIds]);
+
+  const tried = useMemo(() => {
+    const overrides = new Set(triedOverrides);
+    return new Set(
+      recipes.filter((r) => isTried(r, overrides)).map((r) => r.id),
+    );
+  }, [recipes, triedOverrides]);
 
   const addRecipe = (recipe: Recipe) =>
     setCustomRecipes((current) => [...current, recipe]);
@@ -41,7 +54,18 @@ export function useRecipes() {
         : [...current, id],
     );
 
-  return { recipes, favorites, addRecipe, removeRecipe, toggleFavorite };
+  const toggleTriedStatus = (id: string) =>
+    setTriedOverrides((current) => [...toggleTried(current, id)]);
+
+  return {
+    recipes,
+    favorites,
+    tried,
+    addRecipe,
+    removeRecipe,
+    toggleFavorite,
+    toggleTried: toggleTriedStatus,
+  };
 }
 
 export type RecipesApi = ReturnType<typeof useRecipes>;
