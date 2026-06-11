@@ -44,6 +44,7 @@ export default function App() {
             recipesApi={recipesApi}
             plan={weekPlan.plan}
             onAssignDay={weekPlan.assign}
+            onClearDay={weekPlan.clear}
           />
         </>
       ) : (
@@ -65,6 +66,7 @@ export default function App() {
           recipes={recipes}
           favorites={recipesApi.favorites}
           onAssignDay={weekPlan.assign}
+          onClearDay={weekPlan.clear}
           onClose={() => setPickerOpen(false)}
         />
       )}

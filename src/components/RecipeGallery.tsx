@@ -8,11 +8,12 @@ type Props = {
   readonly recipesApi: RecipesApi;
   readonly plan: WeekPlan;
   readonly onAssignDay: (day: DayKey, recipeId: string) => void;
+  readonly onClearDay: (day: DayKey) => void;
 };
 
 type CategoryFilter = Category | "alle" | "favoritter";
 
-export function RecipeGallery({ recipesApi, plan, onAssignDay }: Props) {
+export function RecipeGallery({ recipesApi, plan, onAssignDay, onClearDay }: Props) {
   const { recipes, favorites, toggleFavorite, removeRecipe } = recipesApi;
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<CategoryFilter>("alle");
@@ -82,6 +83,7 @@ export function RecipeGallery({ recipesApi, plan, onAssignDay }: Props) {
               plan={plan}
               onToggleFavorite={() => toggleFavorite(recipe.id)}
               onAssignDay={(day) => onAssignDay(day, recipe.id)}
+              onClearDay={onClearDay}
               onRemove={recipe.custom ? () => removeRecipe(recipe.id) : undefined}
             />
           ))}

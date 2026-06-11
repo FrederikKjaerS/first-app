@@ -7,6 +7,7 @@ type Props = {
   readonly recipes: readonly Recipe[];
   readonly favorites: ReadonlySet<string>;
   readonly onAssignDay: (day: DayKey, recipeId: string) => void;
+  readonly onClearDay: (day: DayKey) => void;
   readonly onClose: () => void;
 };
 
@@ -16,7 +17,13 @@ const SPIN_START_MS = 65;
 const SPIN_GROWTH = 1.16;
 const SPIN_END_MS = 420;
 
-export function PickerOverlay({ recipes, favorites, onAssignDay, onClose }: Props) {
+export function PickerOverlay({
+  recipes,
+  favorites,
+  onAssignDay,
+  onClearDay,
+  onClose,
+}: Props) {
   const [onlyFavorites, setOnlyFavorites] = useState(false);
   const [phase, setPhase] = useState<Phase>("spinning");
   const [current, setCurrent] = useState<Recipe | null>(null);
@@ -127,10 +134,20 @@ export function PickerOverlay({ recipes, favorites, onAssignDay, onClose }: Prop
                     type="button"
                     className={`daydot daydot-big ${plannedDay === day ? "is-on" : ""}`}
                     onClick={() => {
-                      onAssignDay(day, current.id);
-                      setPlannedDay(day);
+                      if (plannedDay === day) {
+                        onClearDay(day);
+                        setPlannedDay(null);
+                      } else {
+                        onAssignDay(day, current.id);
+                        setPlannedDay(day);
+                      }
                     }}
-                    aria-label={`Sæt på ${DAY_LABELS[day]}`}
+                    aria-label={
+                      plannedDay === day
+                        ? `Fjern fra ${DAY_LABELS[day]}`
+                        : `Sæt på ${DAY_LABELS[day]}`
+                    }
+                    aria-pressed={plannedDay === day}
                   >
                     {DAY_LABELS[day].charAt(0)}
                   </button>

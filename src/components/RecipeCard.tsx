@@ -7,6 +7,7 @@ type Props = {
   readonly plan: WeekPlan;
   readonly onToggleFavorite: () => void;
   readonly onAssignDay: (day: DayKey) => void;
+  readonly onClearDay: (day: DayKey) => void;
   readonly onRemove?: () => void;
 };
 
@@ -17,6 +18,7 @@ export function RecipeCard({
   plan,
   onToggleFavorite,
   onAssignDay,
+  onClearDay,
   onRemove,
 }: Props) {
   return (
@@ -66,9 +68,18 @@ export function RecipeCard({
                 key={day}
                 type="button"
                 className={`daydot ${isPlanned ? "is-on" : ""}`}
-                onClick={() => onAssignDay(day)}
-                title={`${DAY_LABELS[day]}: ${recipe.name}`}
-                aria-label={`Sæt på ${DAY_LABELS[day]}`}
+                onClick={() => (isPlanned ? onClearDay(day) : onAssignDay(day))}
+                title={
+                  isPlanned
+                    ? `Fjern ${recipe.name} fra ${DAY_LABELS[day].toLowerCase()}`
+                    : `Sæt ${recipe.name} på ${DAY_LABELS[day].toLowerCase()}`
+                }
+                aria-label={
+                  isPlanned
+                    ? `Fjern fra ${DAY_LABELS[day]}`
+                    : `Sæt på ${DAY_LABELS[day]}`
+                }
+                aria-pressed={isPlanned}
               >
                 {DAY_LABELS[day].charAt(0)}
               </button>
