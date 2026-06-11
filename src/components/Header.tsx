@@ -1,46 +1,58 @@
-export type View = "retter" | "uge";
+import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
+import { cloudEnabled } from "../lib/supabase";
 
 type Props = {
-  readonly view: View;
-  readonly onViewChange: (view: View) => void;
   readonly onAddRecipe: () => void;
+  readonly onAuth: () => void;
 };
 
-export function Header({ view, onViewChange, onAddRecipe }: Props) {
+export function Header({ onAddRecipe, onAuth }: Props) {
+  const { user, profile, signOut } = useAuth();
+
   return (
     <header className="header">
-      <button
-        type="button"
-        className="wordmark"
-        onClick={() => onViewChange("retter")}
-        aria-label="Gå til forsiden"
-      >
+      <Link to="/" className="wordmark" aria-label="Gå til forsiden">
         <span className="wordmark-pan" aria-hidden="true">
           🍳
         </span>
         Aftensmad
-      </button>
+      </Link>
 
       <nav className="nav" aria-label="Hovednavigation">
-        <button
-          type="button"
-          className={`nav-tab ${view === "retter" ? "is-active" : ""}`}
-          onClick={() => onViewChange("retter")}
-        >
+        <NavLink to="/" end className={({ isActive }) => `nav-tab ${isActive ? "is-active" : ""}`}>
           Opskrifter
-        </button>
-        <button
-          type="button"
-          className={`nav-tab ${view === "uge" ? "is-active" : ""}`}
-          onClick={() => onViewChange("uge")}
-        >
+        </NavLink>
+        <NavLink to="/uge" className={({ isActive }) => `nav-tab ${isActive ? "is-active" : ""}`}>
           Ugeplan
-        </button>
+        </NavLink>
+        {cloudEnabled && (
+          <NavLink to="/folk" className={({ isActive }) => `nav-tab ${isActive ? "is-active" : ""}`}>
+            Folk
+          </NavLink>
+        )}
       </nav>
 
-      <button type="button" className="btn btn-outline header-add" onClick={onAddRecipe}>
-        + Ny opskrift
-      </button>
+      <div className="header-side">
+        <button type="button" className="btn btn-outline header-add" onClick={onAddRecipe}>
+          + Ny opskrift
+        </button>
+        {cloudEnabled &&
+          (user && profile ? (
+            <span className="header-user">
+              <Link to={`/u/${profile.username}`} className="header-username">
+                @{profile.username}
+              </Link>
+              <button type="button" className="btn btn-ghost btn-small" onClick={() => void signOut()}>
+                Log ud
+              </button>
+            </span>
+          ) : (
+            <button type="button" className="btn btn-primary header-login" onClick={onAuth}>
+              Log ind
+            </button>
+          ))}
+      </div>
     </header>
   );
 }

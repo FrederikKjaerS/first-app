@@ -33,6 +33,36 @@ export function AddRecipeDialog({ existingIds, onAdd, onClose }: Props) {
   const [image, setImage] = useState("");
   const [hasTried, setHasTried] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [fetching, setFetching] = useState(false);
+
+  const fetchFromLink = async () => {
+    if (!isValidUrl(link.trim())) {
+      setError("Indsæt et gyldigt link først, fx https://www.valdemarsro.dk/…");
+      return;
+    }
+    setFetching(true);
+    setError(null);
+    try {
+      const response = await fetch(
+        `/api/scrape?url=${encodeURIComponent(link.trim())}`,
+      );
+      const data: { title?: string | null; image?: string | null; error?: string } =
+        await response.json();
+      if (!response.ok) {
+        setError(data.error ?? "Kunne ikke hente siden");
+        return;
+      }
+      if (data.title && !name.trim()) setName(data.title);
+      if (data.image) setImage(data.image);
+      if (!data.title && !data.image) {
+        setError("Siden havde hverken titel eller billede at hente.");
+      }
+    } catch {
+      setError("Kunne ikke hente info fra linket lige nu.");
+    } finally {
+      setFetching(false);
+    }
+  };
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -80,7 +110,31 @@ export function AddRecipeDialog({ existingIds, onAdd, onClose }: Props) {
           ✕
         </button>
         <h2 className="dialog-title">Ny opskrift</h2>
-        <p className="dialog-sub">Tilføj en ret til samlingen — den gemmes i din browser.</p>
+        <p className="dialog-sub">
+          Indsæt et link og lad os hente navn og billede — eller udfyld selv.
+        </p>
+
+        <label className="field">
+          <span>Link til opskriften</span>
+          <div className="field-link">
+            <input
+              type="url"
+              value={link}
+              onChange={(event) => setLink(event.target.value)}
+              placeholder="https://…"
+              autoFocus
+              required
+            />
+            <button
+              type="button"
+              className="btn btn-outline btn-small"
+              onClick={fetchFromLink}
+              disabled={fetching}
+            >
+              {fetching ? "Henter…" : "✨ Hent info"}
+            </button>
+          </div>
+        </label>
 
         <label className="field">
           <span>Navn</span>
@@ -89,7 +143,6 @@ export function AddRecipeDialog({ existingIds, onAdd, onClose }: Props) {
             value={name}
             onChange={(event) => setName(event.target.value)}
             placeholder="Fx farmors frikadeller"
-            autoFocus
             required
           />
         </label>
@@ -106,17 +159,6 @@ export function AddRecipeDialog({ existingIds, onAdd, onClose }: Props) {
               </option>
             ))}
           </select>
-        </label>
-
-        <label className="field">
-          <span>Link til opskriften</span>
-          <input
-            type="url"
-            value={link}
-            onChange={(event) => setLink(event.target.value)}
-            placeholder="https://…"
-            required
-          />
         </label>
 
         <label className="field">

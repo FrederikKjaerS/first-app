@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { DAY_KEYS, DAY_LABELS, type DayKey, type Recipe } from "../types";
-import type { WeekPlanApi } from "../hooks/useWeekPlan";
+import type { WeekPlanApi } from "../dataApi";
 import { todayKey } from "../lib/week";
 import { pickRandomExcluding } from "../lib/random";
 import { recipeImageSrc } from "../lib/image";

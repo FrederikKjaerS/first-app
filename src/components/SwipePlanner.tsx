@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { DAY_KEYS, DAY_LABELS, type DayKey, type Recipe } from "../types";
-import type { WeekPlanApi } from "../hooks/useWeekPlan";
+import type { WeekPlanApi } from "../dataApi";
 import { shuffled } from "../lib/random";
 import { findLastEaten, weekLabel, weeksBetween } from "../lib/history";
 import { recipeImageSrc } from "../lib/image";

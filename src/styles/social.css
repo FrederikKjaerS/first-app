@@ -1,0 +1,237 @@
+/* ---------------------------------------------------------------------------
+   Social: people, profiles, auth, splash & import banner
+--------------------------------------------------------------------------- */
+
+.splash {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--ink-soft);
+}
+
+.splash-pan {
+  font-size: 30px;
+  animation: panShake 1.1s ease-in-out infinite;
+}
+
+@keyframes panShake {
+  0%, 100% { transform: rotate(0); }
+  30% { transform: rotate(-14deg); }
+  60% { transform: rotate(10deg); }
+}
+
+.cloud-error {
+  margin: 14px 0 0;
+  padding: 10px 16px;
+  border: 2px solid var(--accent-deep);
+  border-radius: 10px;
+  background: rgba(194, 64, 31, 0.07);
+  color: var(--accent-deep);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.import-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 12px 18px;
+  border: 2px dashed var(--herb);
+  border-radius: 12px;
+  background: rgba(68, 101, 63, 0.06);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.import-banner-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ------------------------------- header extras -------------------------- */
+
+.header-side {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-user {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.header-username {
+  font-weight: 700;
+  font-size: 14.5px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.header-username:hover {
+  color: var(--accent-deep);
+  text-decoration: underline;
+}
+
+/* ------------------------------- people --------------------------------- */
+
+.people {
+  padding-top: 40px;
+}
+
+.people-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 26px;
+}
+
+.people-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 16px;
+}
+
+.people-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-pop);
+  padding: 14px 16px;
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.people-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-pop-hover);
+}
+
+.people-identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--ink);
+  min-width: 0;
+}
+
+.people-avatar {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: var(--paper-deep);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.people-avatar-big {
+  width: 64px;
+  height: 64px;
+  font-size: 28px;
+}
+
+.people-name {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 640;
+  font-size: 17px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.people-username {
+  display: block;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* ------------------------------- profile -------------------------------- */
+
+.profile {
+  padding-top: 40px;
+}
+
+.profile-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.profile-actions {
+  margin-left: auto;
+}
+
+.profile-week {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-pop);
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+
+.profile-week-title {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 640;
+}
+
+.profile-recipes-title {
+  margin-top: 40px;
+  margin-bottom: 16px;
+}
+
+.profile-grid {
+  margin-top: 8px;
+}
+
+/* ------------------------------- add dialog link row -------------------- */
+
+.field-link {
+  display: flex;
+  gap: 8px;
+}
+
+.field-link input {
+  flex: 1;
+  min-width: 0;
+}
+
+.field-link .btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .header-side {
+    margin-left: auto;
+  }
+}

@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import type { RecipesApi } from "../hooks/useRecipes";
+import type { RecipesApi } from "../dataApi";
 import type { Category, DayKey, WeekPlan } from "../types";
 import { CATEGORIES } from "../data/recipes";
 import { RecipeCard } from "./RecipeCard";
