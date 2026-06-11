@@ -35,14 +35,18 @@ const AuthContext = createContext<AuthApi | null>(null);
 
 const USERNAME_RE = /^[a-z0-9_]{3,20}$/;
 
-async function ensureProfile(user: User): Promise<Profile | null> {
-  if (!supabase) return null;
+type EnsureResult =
+  | { readonly profile: Profile }
+  | { readonly profile: null; readonly deadSession: boolean };
+
+async function ensureProfile(user: User): Promise<EnsureResult> {
+  if (!supabase) return { profile: null, deadSession: false };
   const { data: existing } = await supabase
     .from("profiles")
     .select("id, username, display_name")
     .eq("id", user.id)
     .maybeSingle();
-  if (existing) return existing as Profile;
+  if (existing) return { profile: existing as Profile };
 
   const base =
     typeof user.user_metadata?.username === "string" &&
@@ -51,15 +55,18 @@ async function ensureProfile(user: User): Promise<Profile | null> {
       : `kok${user.id.slice(0, 6)}`;
 
   // Retry with a suffix if the username was taken in the meantime.
+  let deadSession = false;
   for (const candidate of [base, `${base}${user.id.slice(0, 4)}`]) {
     const { data, error } = await supabase
       .from("profiles")
       .insert({ id: user.id, username: candidate })
       .select("id, username, display_name")
       .single();
-    if (!error && data) return data as Profile;
+    if (!error && data) return { profile: data as Profile };
+    // 23503: the auth user behind this session no longer exists.
+    if (error?.code === "23503") deadSession = true;
   }
-  return null;
+  return { profile: null, deadSession };
 }
 
 export function AuthProvider({ children }: { readonly children: ReactNode }) {
@@ -73,10 +80,19 @@ export function AuthProvider({ children }: { readonly children: ReactNode }) {
 
     const apply = async (session: Session | null) => {
       const nextUser = session?.user ?? null;
-      const nextProfile = nextUser ? await ensureProfile(nextUser) : null;
+      const result = nextUser
+        ? await ensureProfile(nextUser)
+        : { profile: null as Profile | null, deadSession: false };
       if (cancelled) return;
-      setUser(nextUser);
-      setProfile(nextProfile);
+      if (result.profile === null && "deadSession" in result && result.deadSession) {
+        // The account was deleted; drop the stale token instead of looping.
+        void supabase?.auth.signOut();
+        setUser(null);
+        setProfile(null);
+      } else {
+        setUser(nextUser);
+        setProfile(result.profile);
+      }
       setLoading(false);
     };
 

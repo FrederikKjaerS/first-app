@@ -11,7 +11,8 @@ export function Header({ onAddRecipe, onAuth }: Props) {
   const { user, profile, signOut } = useAuth();
 
   return (
-    <header className="header">
+    <>
+      <header className="header">
       <Link to="/" className="wordmark" aria-label="Gå til forsiden">
         <span className="wordmark-pan" aria-hidden="true">
           🍳
@@ -53,6 +54,44 @@ export function Header({ onAddRecipe, onAuth }: Props) {
             </button>
           ))}
       </div>
-    </header>
+      </header>
+
+      {/* App-like bottom navigation, shown on phones only (see responsive.css) */}
+      <nav className="tabbar" aria-label="Mobilnavigation">
+        <NavLink to="/" end className={({ isActive }) => `tabbar-item ${isActive ? "is-active" : ""}`}>
+          <span className="tabbar-icon" aria-hidden="true">🍳</span>
+          Retter
+        </NavLink>
+        <NavLink to="/uge" className={({ isActive }) => `tabbar-item ${isActive ? "is-active" : ""}`}>
+          <span className="tabbar-icon" aria-hidden="true">🗓️</span>
+          Ugeplan
+        </NavLink>
+        {cloudEnabled && (
+          <NavLink to="/folk" className={({ isActive }) => `tabbar-item ${isActive ? "is-active" : ""}`}>
+            <span className="tabbar-icon" aria-hidden="true">👥</span>
+            Folk
+          </NavLink>
+        )}
+        <button type="button" className="tabbar-item" onClick={onAddRecipe}>
+          <span className="tabbar-icon" aria-hidden="true">➕</span>
+          Ny ret
+        </button>
+        {cloudEnabled &&
+          (user && profile ? (
+            <NavLink
+              to={`/u/${profile.username}`}
+              className={({ isActive }) => `tabbar-item ${isActive ? "is-active" : ""}`}
+            >
+              <span className="tabbar-icon" aria-hidden="true">👤</span>
+              Profil
+            </NavLink>
+          ) : (
+            <button type="button" className="tabbar-item" onClick={onAuth}>
+              <span className="tabbar-icon" aria-hidden="true">👤</span>
+              Log ind
+            </button>
+          ))}
+      </nav>
+    </>
   );
 }

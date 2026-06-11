@@ -7,6 +7,7 @@ import "./styles/base.css";
 import "./styles/recipes.css";
 import "./styles/overlays.css";
 import "./styles/social.css";
+import "./styles/responsive.css";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Mangler #root-elementet i index.html");
