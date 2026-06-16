@@ -122,14 +122,21 @@
   }
 
   .search {
+    /* In a column flex context (phone filterbar), flex-basis:240px sets HEIGHT
+       not width — reset flex entirely and rely on explicit height. */
+    flex: none;
+    width: 100%;
     max-width: none;
-    font-size: 16px; /* prevents iOS Safari auto-zoom which inflates input height */
+    font-size: 16px; /* prevents iOS Safari auto-zoom inflating input height */
     height: 44px;
     border-radius: 12px;
     padding: 0 14px;
   }
 
   .chooser-search {
+    /* Same fix: chooser is also a column flex container */
+    flex: none;
+    width: 100%;
     font-size: 16px;
     height: 44px;
     border-radius: 12px;
