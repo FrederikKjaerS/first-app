@@ -57,7 +57,8 @@
 
 @media (max-width: 640px) {
   .app {
-    padding: 0 14px calc(96px + env(safe-area-inset-bottom, 16px));
+    /* env(safe-area-inset-top) pushes content below Dynamic Island in standalone PWA mode */
+    padding: env(safe-area-inset-top, 0px) 14px calc(96px + env(safe-area-inset-bottom, 16px));
   }
 
   /* header collapses to wordmark + auth state; nav moves to the tab bar */
@@ -123,16 +124,29 @@
   .search {
     max-width: none;
     font-size: 16px; /* prevents iOS Safari auto-zoom which inflates input height */
-    height: 48px;
-    border-radius: 14px;
-    padding: 0 16px;
+    height: 44px;
+    border-radius: 12px;
+    padding: 0 14px;
   }
 
   .chooser-search {
     font-size: 16px;
-    height: 48px;
-    border-radius: 14px;
-    padding: 0 16px;
+    height: 44px;
+    border-radius: 12px;
+    padding: 0 14px;
+  }
+
+  /* All text inputs must be ≥16px on iOS to prevent Safari auto-zoom.
+     Auto-zoom changes the viewport scale, making pages look different widths
+     and displacing fixed elements like the tab bar. */
+  .field input,
+  .field select,
+  input[type="text"],
+  input[type="url"],
+  input[type="email"],
+  input[type="search"],
+  select {
+    font-size: 16px;
   }
 
   .chips {
