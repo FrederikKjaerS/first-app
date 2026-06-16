@@ -57,7 +57,7 @@
 
 @media (max-width: 640px) {
   .app {
-    padding: 0 14px calc(86px + env(safe-area-inset-bottom));
+    padding: 0 14px calc(96px + env(safe-area-inset-bottom, 16px));
   }
 
   /* header collapses to wordmark + auth state; nav moves to the tab bar */
@@ -122,6 +122,17 @@
 
   .search {
     max-width: none;
+    font-size: 16px; /* prevents iOS Safari auto-zoom which inflates input height */
+    height: 48px;
+    border-radius: 14px;
+    padding: 0 16px;
+  }
+
+  .chooser-search {
+    font-size: 16px;
+    height: 48px;
+    border-radius: 14px;
+    padding: 0 16px;
   }
 
   .chips {
@@ -419,11 +430,17 @@
     z-index: 80;
     display: flex;
     justify-content: space-around;
-    align-items: stretch;
+    align-items: flex-start;
     background: var(--card);
     border-top: 2px solid var(--ink);
-    padding: 7px 6px calc(7px + env(safe-area-inset-bottom));
+    /* env(safe-area-inset-bottom) handles notch + home indicator.
+       The extra 4px prevents iOS Safari's retractable chrome from
+       slicing the tab labels during scroll. */
+    padding: 10px 6px calc(10px + env(safe-area-inset-bottom, 16px));
     box-shadow: 0 -6px 18px rgba(39, 25, 14, 0.08);
+    /* isolate from scroll-driven transforms in iOS Safari */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
   }
 
   .tabbar-item {
@@ -453,5 +470,89 @@
   .tabbar-icon {
     font-size: 19px;
     line-height: 1;
+  }
+}
+
+/* ------------------------- iOS install prompt ---------------------------- */
+
+.install-prompt {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .install-prompt {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: fixed;
+    bottom: calc(80px + env(safe-area-inset-bottom, 16px));
+    left: 12px;
+    right: 12px;
+    z-index: 90;
+    background: var(--ink);
+    color: var(--card);
+    border-radius: 18px;
+    padding: 14px 16px;
+    box-shadow: 0 8px 32px rgba(39, 25, 14, 0.35);
+    animation: promptSlideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .install-icon {
+    font-size: 30px;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .install-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .install-title {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--card);
+    margin-bottom: 3px;
+  }
+
+  .install-text {
+    font-size: 12.5px;
+    color: rgba(255, 247, 236, 0.78);
+    line-height: 1.45;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3px;
+  }
+
+  .install-share-icon {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    color: rgba(255, 247, 236, 0.9);
+  }
+
+  .install-close {
+    flex-shrink: 0;
+    background: none;
+    border: 0;
+    color: rgba(255, 247, 236, 0.6);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+  }
+
+  @keyframes promptSlideUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 }

@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { Header } from "./components/Header";
+import { InstallPrompt } from "./components/InstallPrompt";
 import { Hero } from "./components/Hero";
 import { RecipeGallery } from "./components/RecipeGallery";
 import { WeekPlanner } from "./components/WeekPlanner";
@@ -94,6 +95,7 @@ function Shell({ recipesApi, weekPlan, cloudUserId, cloudError, onRefresh }: She
   return (
     <div className="app">
       <Header onAddRecipe={() => setAddOpen(true)} onAuth={() => setAuthOpen(true)} />
+      <InstallPrompt />
 
       {cloudError && (
         <p className="cloud-error" role="alert">
