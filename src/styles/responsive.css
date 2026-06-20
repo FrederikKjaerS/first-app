@@ -166,6 +166,10 @@
     padding-right: 14px;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
+    /* Fix: overflow-x:auto inside a flex-column item ignores align-items:stretch,
+       causing the container to balloon to ~2× parent width. Explicit width forces
+       the box to exactly fill the viewport (parent=362px + 2×14px margins = 390px). */
+    width: calc(100% + 28px);
   }
 
   .chips::-webkit-scrollbar {
